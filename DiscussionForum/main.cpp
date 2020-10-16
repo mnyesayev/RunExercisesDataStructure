@@ -6,6 +6,7 @@
 using namespace std;
 int main()
 {
+	
 	treeList tl;
 	string title, father, val, son;
 	char ch;
@@ -23,7 +24,8 @@ int main()
 		cin >> ch;
 		switch (ch)
 		{
-		case 'n':cout << "enter the discussion title (with no space) "; cin >> val; tl.addNewTree(val); break;
+		case 'n':cout << "enter the discussion title (with no space) ";
+			cin >> val; tl.addNewTree(val); break;
 		case 's':cout << "enter the discussion title (with no space) "; cin >> title;
 			cout << "enter the last message (with no space) "; cin >> father;
 			cout << "enter the new respond "; cin >> son;
