@@ -23,9 +23,11 @@ public:
 	void delSubTree(std::string content);
 	void print();
 	void printPath(std::string content);
-	void printResponse();
+	void printResponse(std::string content);
 private:
 	Node* getNode(std::list<Node*> temp, std::string content);
+	void delTree(std::list<Node*> temp);
+	void print(std::list<Node*> temp,int space=1);
 
 };
 
