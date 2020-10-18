@@ -73,7 +73,22 @@ void TreeList::print()
 }
 void TreeList::printPath(std::string content)
 {
-
+	if (root->getContent() == content) {
+		cout << root->getContent();
+		return;
+	}
+	list<Node*> * lst =new list<Node*>;
+	lst->push_back(root);
+	if (!root->getResponses().empty()) {
+		 lst = printPath(root->getResponses(), content,lst);
+	}
+	if (lst != nullptr) {
+		for (auto it = lst->begin(); it != lst->end(); ++it) {
+			cout << (*it)->getContent()<< endl << "	";
+		}
+	}
+	lst->clear();
+	lst = nullptr;
 }
 void TreeList::printResponse(string content)
 {
@@ -107,6 +122,29 @@ TreeList::Node* TreeList::getNode(list<Node*> temp, std::string content)
 	}
 	return nullptr;
 }
+
+list<TreeList::Node*>* TreeList::printPath(std::list<Node*> temp,std::string content,list<Node*>* lst)
+{
+	for (auto it = temp.begin(); it != temp.end(); ++it)
+	{
+		lst->push_back(*it);
+			if ((*it)->getContent() == content)
+			{
+				return lst;
+			}
+			else
+			{
+				if (!(*it)->getResponses().empty())
+				{
+					list<Node*>* tmp = printPath((*it)->getResponses(), content,lst);
+					if (tmp != nullptr)
+						return tmp;
+				}
+			}
+			lst->remove(lst->back());
+	}
+	return nullptr;
+}
 void TreeList::delTree(list<Node*> cur)
 {
 	for (auto it = cur.begin(); it != cur.end(); it++)
@@ -133,4 +171,3 @@ void TreeList::print(std::list<Node*> temp, int space)
 	}
 
 }
-

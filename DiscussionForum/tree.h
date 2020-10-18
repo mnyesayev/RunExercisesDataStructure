@@ -26,6 +26,7 @@ public:
 	void printResponse(std::string content);
 private:
 	Node* getNode(std::list<Node*> temp, std::string content);
+	list<Node*>* printPath(std::list<Node*> temp, std::string content, list<Node*>* lst);
 	void delTree(std::list<Node*> temp);
 	void print(std::list<Node*> temp,int space=1);
 
