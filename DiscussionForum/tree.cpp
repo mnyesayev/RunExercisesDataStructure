@@ -102,6 +102,7 @@ void TreeList::printResponse(string content)
 			print(temp->getResponses());
 	}
 }
+//private functions:
 TreeList::Node* TreeList::getNode(list<Node*> temp, std::string content)
 {
 	for (auto it = temp.begin(); it != temp.end(); ++it)
@@ -122,7 +123,6 @@ TreeList::Node* TreeList::getNode(list<Node*> temp, std::string content)
 	}
 	return nullptr;
 }
-
 list<TreeList::Node*>* TreeList::printPath(std::list<Node*> temp,std::string content,list<Node*>* lst)
 {
 	for (auto it = temp.begin(); it != temp.end(); ++it)
@@ -158,7 +158,6 @@ void TreeList::delTree(list<Node*> cur)
 		}
 	}
 }
-
 void TreeList::print(std::list<Node*> temp, int space)
 {
 	for (int i = 0; i < space; ++i)
