@@ -1,7 +1,13 @@
 #include "tree.h"
+
 using namespace std;
 
-TreeList::Node::Node(std::string con) :content(con) {}
+void TreeList::Node::setContent(string con)
+{
+	content = con;
+}
+
+TreeList::Node::Node(string con) :content(con) {}
 
 std::string TreeList::Node::getContent()
 {
@@ -18,22 +24,26 @@ TreeList::TreeList() :root(nullptr) {}
 TreeList::~TreeList()
 {
 	if (root != nullptr)
+	{
 		if (!root->getResponses().empty())
 			delTree(root->getResponses());
-}
-
-TreeList::TreeList(std::string content)
-{
-	if (!root)
-		root = new Node(content);
-	else
-	{
-		delete root;
-		root = new Node(content);
+		root = nullptr;
 	}
 }
 
-TreeList::Node* TreeList::getNode(std::string content)
+TreeList::TreeList(string content)
+{
+	if (root == nullptr)
+		root = new Node(content);
+	else
+	{
+		if (!root->getResponses().empty())
+			delTree(root->getResponses());
+		root->setContent(content);
+	}
+}
+
+TreeList::Node* TreeList::getNode(string content)
 {
 	if (root == nullptr)
 		return nullptr;
@@ -46,7 +56,7 @@ TreeList::Node* TreeList::getNode(std::string content)
 	}
 	return nullptr;
 }
-void TreeList::addResponse(std::string father, std::string son)
+void TreeList::addResponse(string father, string son)
 {
 	Node* curNode = getNode(father);
 	if (curNode == nullptr)
@@ -54,7 +64,7 @@ void TreeList::addResponse(std::string father, std::string son)
 	Node* newNode = new Node(son);
 	curNode->getResponses().push_back(newNode);
 }
-void TreeList::delSubTree(std::string content)
+void TreeList::delSubTree(string content)
 {
 	Node* curNode = getNode(content);
 	if (curNode != nullptr && !curNode->getResponses().empty())
@@ -77,14 +87,14 @@ void TreeList::printPath(std::string content)
 		cout << root->getContent();
 		return;
 	}
-	list<Node*> * lst =new list<Node*>;
+	list<Node*>* lst = new list<Node*>;
 	lst->push_back(root);
 	if (!root->getResponses().empty()) {
-		 lst = printPath(root->getResponses(), content,lst);
+		lst = printPath(root->getResponses(), content, lst);
 	}
 	if (lst != nullptr) {
 		for (auto it = lst->begin(); it != lst->end(); ++it) {
-			cout << (*it)->getContent()<< endl << "	";
+			cout << (*it)->getContent() << endl << "	";
 		}
 	}
 	lst->clear();
@@ -103,7 +113,7 @@ void TreeList::printResponse(string content)
 	}
 }
 //private functions:
-TreeList::Node* TreeList::getNode(list<Node*> temp, std::string content)
+TreeList::Node* TreeList::getNode(list<Node*> temp, string content)
 {
 	for (auto it = temp.begin(); it != temp.end(); ++it)
 	{
@@ -123,25 +133,25 @@ TreeList::Node* TreeList::getNode(list<Node*> temp, std::string content)
 	}
 	return nullptr;
 }
-list<TreeList::Node*>* TreeList::printPath(std::list<Node*> temp,std::string content,list<Node*>* lst)
+list<TreeList::Node*>* TreeList::printPath(list<Node*> temp, string content, list<Node*>* lst)
 {
 	for (auto it = temp.begin(); it != temp.end(); ++it)
 	{
 		lst->push_back(*it);
-			if ((*it)->getContent() == content)
+		if ((*it)->getContent() == content)
+		{
+			return lst;
+		}
+		else
+		{
+			if (!(*it)->getResponses().empty())
 			{
-				return lst;
+				list<Node*>* tmp = printPath((*it)->getResponses(), content, lst);
+				if (tmp != nullptr)
+					return tmp;
 			}
-			else
-			{
-				if (!(*it)->getResponses().empty())
-				{
-					list<Node*>* tmp = printPath((*it)->getResponses(), content,lst);
-					if (tmp != nullptr)
-						return tmp;
-				}
-			}
-			lst->remove(lst->back());
+		}
+		lst->remove(lst->back());
 	}
 	return nullptr;
 }
@@ -158,7 +168,7 @@ void TreeList::delTree(list<Node*> cur)
 		}
 	}
 }
-void TreeList::print(std::list<Node*> temp, int space)
+void TreeList::print(list<Node*> temp, int space)
 {
 	for (int i = 0; i < space; ++i)
 		cout << "	";
@@ -168,5 +178,4 @@ void TreeList::print(std::list<Node*> temp, int space)
 		if (!(*it)->getResponses().empty())
 			print((*it)->getResponses(), ++space);
 	}
-
 }

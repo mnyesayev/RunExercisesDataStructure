@@ -6,7 +6,7 @@
 using namespace std;
 int main()
 {
-	treeList tl;
+	ListDiscussion tl;
 	string title, father, val, son;
 	char ch;
 	cout << "\nDISCUSSION TREE\n";
