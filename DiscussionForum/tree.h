@@ -11,7 +11,7 @@ class TreeList
 	public:
 		Node(std::string con);
 		std::string getContent();
-		std::list<Node*> getResponses();
+		std::list<Node*>* getResponses();
 		void setContent(std::string);
 	};
 	Node* root;
@@ -26,10 +26,10 @@ public:
 	void printPath(std::string content);
 	void printResponse(std::string content);
 private:
-	Node* getNode(std::list<Node*> temp, std::string content);
-	std::list<Node*>* printPath(std::list<Node*> temp, std::string content, std::list<Node*>* lst);
-	void delTree(std::list<Node*> temp);
-	void print(std::list<Node*> temp,int space=1);
+	Node* getNode(std::list<Node*>* temp, std::string content);
+	std::list<Node*>* printPath(std::list<Node*>* temp, std::string content, std::list<Node*>* lst);
+	void delTree(std::list<Node*>* temp);
+	void print(std::list<Node*>* temp,int space=1);
 
 };
 
