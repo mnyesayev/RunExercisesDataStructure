@@ -1,14 +1,16 @@
 #pragma once
 
 #include "tree.h"
-
-class ListDiscussion:public TreeList
+#include <algorithm>
+class listDiscussion:public TreeList
 {
 public:
-	ListDiscussion();
-	~ListDiscussion();
-
+	listDiscussion();
+	~listDiscussion();
+	void addNewTree(std::string r);
+	bool deltree1(TreeList::Node* r);
+	bool delResponse(std::string title, std::string father, std::string son);
 private:
-
+	std::list<TreeList> lstRoot;
 };
 

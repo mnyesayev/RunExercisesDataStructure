@@ -23,6 +23,7 @@
     <ClInclude Include="tree.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="listDiscussion.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tree.cpp" />
   </ItemGroup>

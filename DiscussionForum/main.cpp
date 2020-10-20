@@ -6,7 +6,7 @@
 using namespace std;
 int main()
 {
-	TreeList tl("root");
+	listDiscussion tl;
 	string title, father, val, son;
 	char ch;
 	cout << "\nDISCUSSION TREE\n";
@@ -23,55 +23,32 @@ int main()
 		cin >> ch;
 		switch (ch)
 		{
-		case 'n':
-			cout << "enter node";//"enter the discussion title (with no space) ";
-			cin >> father;
-			cout << "enter son";
-			cin	>>son;
-			tl.addResponse(father,son);
+		case 'n':cout << "enter the discussion title (with no space) ";
+			cin >> val;
+			tl.addNewTree(val);
 			break;
-		case 's':
-			cout << "enter the discussion title (with no space) ";
-			cin >> title;
-			cout << "enter the last message (with no space) ";
-			cin >> father;
-			cout << "enter the new respond ";
-			cin >> son;
-			/*if (tl.addResponse(title, father, son))
+		case 's':cout << "enter the discussion title (with no space) "; cin >> title;
+			cout << "enter the last message (with no space) "; cin >> father;
+			cout << "enter the new respond "; cin >> son;
+			if (tl.addResponse(title, father, son))
+				cout << "success\n";
+			else
+				cout << "ERROR\n"; break;
+		case 'd':cout << "enter the discussion title (with no space) "; cin >> title;
+			cout << "enter string of subtree to delete (with no space) "; cin >> val;
+			if (tl.delResponse(title, val))
 				cout << "success\n"; 
 			else
-				cout << "ERROR\n";*/
-			break;
-		case 'd':
-			cout << "enter the discussion title (with no space) ";
-			cin >> title;
-			cout << "enter string of subtree to delete (with no space) ";
-			cin >> val;
-			//if (tl.delResponse(title, val))
-				cout << "success\n"; 
-			//else cout << "ERROR\n";
-			break;
-		case 'p':
-			//tl.printAllTrees();
-			break;
+				cout << "ERROR\n"; break;
+		case 'p':tl.printAllTrees();  break;
 		case 'r':
-			//cout << "enter the discussion title (with no space) "; cin >> title;
+			cout << "enter the discussion title (with no space) "; cin >> title;
 			cout << "enter the last message (with no space) "; cin >> val;
-			//tl.printSubTree(title, val); cout << endl;
-			tl.printPath(val);
-			break;
-		case 'w':
-			cout << "enter a string (with no space) ";
-			cin >> val;
-			tl.printResponse(val); 
-			cout << endl;
-			break;
-		case 'e':
-			cout << "bye ";
-			break;
-		default:
-			cout << "ERROR\n";
-			break;
+			tl.printSubTree(title, val); cout << endl;  break;
+		case 'w':cout << "enter a string (with no space) "; cin >> val;
+			tl.searchAndPrint(val); cout << endl;  break;
+		case 'e':cout << "bye "; break;
+		default: cout << "ERROR\n";  break;
 		}
 	} while (ch != 'e');
 }
