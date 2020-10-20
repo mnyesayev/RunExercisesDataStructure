@@ -8,7 +8,8 @@ listDiscussion::~listDiscussion()
 
 void listDiscussion::addNewTree(std::string r)
 {
-	lstRoot.push_back(TreeList(r));
+	TreeList* tmp=new TreeList(r);
+	lstRoot.push_back(tmp);
 }
 bool listDiscussion::deltree1(TreeList::Node* r)
 {
@@ -18,11 +19,12 @@ bool listDiscussion::deltree1(TreeList::Node* r)
 	{
 		for (auto it = lstRoot.begin(); it != lstRoot.end(); ++it)
 		{
-			
-			if (r->getContent() == (*it).root->getContent())
-
+			if (r->getContent() == (*it)->getRoot()->getContent())
+				(*it)->delSubTree(r->getContent());
+				return true;
 		}
 	}
+	return false;
 }
 /*
 bool listDiscussion::deltree1(TreeList::Node* r)

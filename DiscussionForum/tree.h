@@ -23,6 +23,7 @@ public:
 	TreeList();
 	~TreeList();
 	TreeList(std::string content);
+	Node* getRoot();
 	Node* getNode(std::string content);
 	void addResponse(std::string father, std::string son);
 	void delSubTree(std::string content);
