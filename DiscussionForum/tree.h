@@ -24,6 +24,7 @@ public:
 	TreeList();//defult ctor
 	~TreeList();//dtor
 	TreeList(std::string content);
+	Node* getRoot();
 	Node* getNode(std::string content);
 	bool addResponse(std::string father, std::string son);
 	bool delSubTree(std::string content);
@@ -35,6 +36,6 @@ private:
 	std::list<Node*>* printPath(std::list<Node*>* temp, std::string content, std::list<Node*>* lst);
 	void delTree(std::list<Node*>* temp);
 	void print(std::list<Node*>* temp,int space=1);
-
+	//
 };
 

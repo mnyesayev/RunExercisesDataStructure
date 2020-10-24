@@ -45,6 +45,11 @@ TreeList::TreeList(string content)
 	}
 }
 
+TreeList::Node* TreeList::getRoot()
+{
+	return root;
+}
+
 TreeList::Node* TreeList::getNode(string content)
 {
 	if (root == nullptr)

@@ -12,6 +12,6 @@ public:
 	bool addResponse(std::string title, std::string father, std::string son);
 	bool delResponse(std::string title, std::string father, std::string son);
 private:
-	std::list<TreeList> lstRoot;
+	std::list<TreeList*> lstRoot;
 };
 
