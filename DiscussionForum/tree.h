@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <list>
-#include"listDiscussion.h"
 class TreeList
 {
 protected:
@@ -16,9 +15,7 @@ protected:
 		std::string getContent();
 		std::list<Node*>* getResponses();
 		void setContent(std::string);
-		friend listDiscussion;
 	};
-	friend listDiscussion;
 	Node* root;
 public:
 	TreeList();//defult ctor

@@ -68,16 +68,21 @@ bool TreeList::addResponse(string father, string son)
 {
 	Node* curNode = getNode(father);
 	if (curNode == nullptr)
-		return;//	throw "This father not exist";
+		return false;
 	Node* newNode = new Node(son);
 	curNode->getResponses()->push_back(newNode);
+	return true;
 }
 
 bool TreeList::delSubTree(string content)
 {
 	Node* curNode = getNode(content);
 	if (curNode != nullptr && !curNode->getResponses()->empty())
+	{
 		delTree(curNode->getResponses());
+		return true;
+	}
+	return false;
 }
 void TreeList::print()
 {
