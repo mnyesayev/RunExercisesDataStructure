@@ -35,6 +35,6 @@ private:
 	std::list<Node*>* printPath(std::list<Node*>* temp, std::string content, std::list<Node*>* lst);
 	void delTree(std::list<Node*>* temp);
 	void print(std::list<Node*>* temp,int space=1);
-
+	//
 };
 
