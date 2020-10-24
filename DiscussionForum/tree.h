@@ -6,6 +6,7 @@
 class TreeList
 {
 protected:
+	//inner claas Node
 	class Node
 	{
 		std::string content;
@@ -20,12 +21,12 @@ protected:
 	friend listDiscussion;
 	Node* root;
 public:
-	TreeList();
-	~TreeList();
+	TreeList();//defult ctor
+	~TreeList();//dtor
 	TreeList(std::string content);
 	Node* getNode(std::string content);
-	void addResponse(std::string father, std::string son);
-	void delSubTree(std::string content);
+	bool addResponse(std::string father, std::string son);
+	bool delSubTree(std::string content);
 	void print();
 	void printPath(std::string content);
 	void printResponse(std::string content);

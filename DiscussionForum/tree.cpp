@@ -59,7 +59,7 @@ TreeList::Node* TreeList::getNode(string content)
 	return nullptr;
 }
 
-void TreeList::addResponse(string father, string son)
+bool TreeList::addResponse(string father, string son)
 {
 	Node* curNode = getNode(father);
 	if (curNode == nullptr)
@@ -68,7 +68,7 @@ void TreeList::addResponse(string father, string son)
 	curNode->getResponses()->push_back(newNode);
 }
 
-void TreeList::delSubTree(string content)
+bool TreeList::delSubTree(string content)
 {
 	Node* curNode = getNode(content);
 	if (curNode != nullptr && !curNode->getResponses()->empty())

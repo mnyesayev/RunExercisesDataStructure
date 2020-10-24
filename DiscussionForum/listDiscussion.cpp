@@ -19,23 +19,11 @@ bool listDiscussion::deltree1(TreeList::Node* r)
 		for (auto it = lstRoot.begin(); it != lstRoot.end(); ++it)
 		{
 			
-			if (r->getContent() == (*it).root->getContent())
+			if (r->getContent() == (*it).getRoot()->getContent())
+			{
+
+			}
 
 		}
 	}
 }
-/*
-bool listDiscussion::deltree1(TreeList::Node* r)
-{
-	if(r==nullptr)
-	   return false;
-	else
-	{
-		for (auto it = lstRoot.begin(); it != lstRoot.end(); ++it)
-		{
-			if(r->getContent()==(*it)->)
-
-	    }
-	}
-}
-*/
