@@ -76,11 +76,20 @@ bool TreeList::addResponse(string father, string son)
 
 bool TreeList::delSubTree(string content)
 {
-	Node* curNode = getNode(content);
-	if (curNode != nullptr && !curNode->getResponses()->empty())
+	list<Node*>* tmp = getList(root->getResponses(), content);
+	for (auto it = tmp->begin(); it != tmp->end(); ++it)
 	{
-		delTree(curNode->getResponses());
-		return true;
+		if((*it)->getContent()==content)
+		{
+		if (!(*it)->getResponses()->empty())
+		{
+			delTree((*it)->getResponses());
+		}
+		
+			delete* it;
+			tmp->remove(*it);
+			return true;
+		}
 	}
 	return false;
 }
@@ -106,13 +115,19 @@ void TreeList::printPath(std::string content)
 	if (!root->getResponses()->empty()) {
 		lst = printPath(root->getResponses(), content, lst);
 	}
+	else {
+		lst->clear();
+		lst = nullptr;
+	}
 	if (lst != nullptr) {
 		for (auto it = lst->begin(); it != lst->end(); ++it) {
 			cout << (*it)->getContent() <<"=>";
 		}
 	}
-	lst->clear();
-	lst = nullptr;
+	if (!lst->empty()) {
+		lst->clear();
+		lst = nullptr;
+	}
 }
 void TreeList::printResponse(string content)
 {
@@ -182,17 +197,42 @@ void TreeList::delTree(list<Node*>* cur)
 		{
 			delete* it;
 			*it = nullptr;
+			cur->remove(*it);
+			return;
 		}
 	}
 }
 void TreeList::print(list<Node*>* temp, int space)
 {
-	for (int i = 0; i < space; ++i)
-		cout << "	";
 	for (auto it = temp->begin(); it != temp->end(); ++it)
 	{
+		for (int i = 0; i < space; ++i)
+			cout << "	";
 		cout << (*it)->getContent() << endl;
-		if (!(*it)->getResponses()->empty())
+		if (!(*it)->getResponses()->empty()) {
 			print((*it)->getResponses(), ++space);
+			--space;
+		}
 	}
+}
+
+std::list<TreeList::Node*>* TreeList::getList(std::list<Node*>* temp, std::string content)
+{
+	for (auto it = temp->begin(); it != temp->end(); ++it)
+	{
+		if ((*it)->getContent() == content)
+		{
+			return temp;
+		}
+		else
+		{
+			if (!(*it)->getResponses()->empty())
+			{
+				list<Node*>* tmp = getList((*it)->getResponses(), content);
+				if (tmp != nullptr)
+					return tmp;
+			}
+		}
+	}
+	return nullptr;
 }
