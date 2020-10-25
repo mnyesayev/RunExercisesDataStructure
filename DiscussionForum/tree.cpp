@@ -1,114 +1,118 @@
+/*
+Authors:
+Matan Netanel Yesayev ,ID:207883729
+Asher Mentzer,ID:312505563
+*/
 #include "tree.h"
 
 using namespace std;
 
-void TreeList::Node::setContent(string con)
-{
-	content = con;
-}
+void TreeList::Node::setContent(string con) { content = con; }
 
 TreeList::Node::Node(string con) :content(con) {}
 
-std::string TreeList::Node::getContent()
-{
-	return content;
-}
+string TreeList::Node::getContent() { return content; }
 
 list<TreeList::Node*>* TreeList::Node::getResponses()
 {
-	list<TreeList::Node*>* temp;
+	list<TreeList::Node*>* temp = NULL;
 	temp = &responses;
 	return temp;
 }
 
-TreeList::TreeList() :root(nullptr) {}
+TreeList::TreeList() :root(NULL) {}
 
 TreeList::~TreeList()
 {
-	if (root != nullptr)
+	if (root != NULL)
 	{
 		if (!root->getResponses()->empty())
 			delTree(root->getResponses());
-		root = nullptr;
+		root = NULL;
 	}
 }
 
 TreeList::TreeList(string content)
 {
-	if (root == nullptr)
+	if (root == NULL)
 		root = new Node(content);
 	else
 	{
-		if (!root->getResponses()->empty())
-			delTree(root->getResponses());
-		root->setContent(content);
+		if (!root->getResponses()->empty())//if the list no empty
+			delTree(root->getResponses());//delete old list 
+		root->setContent(content);//update new root
 	}
 }
 
-TreeList::Node* TreeList::getRoot()
-{
-	return root;
-}
+TreeList::Node* TreeList::getRoot() { return root; }
 
+/// <summary>
+/// Searches for a node by the string given in the parameter
+/// </summary>
+/// <param name="content"></param>
+/// <returns>Node*</returns>
 TreeList::Node* TreeList::getNode(string content)
 {
-	if (root == nullptr)
-		return nullptr;
+	if (root == NULL)
+		return NULL;
 	if (root->getContent() == content)
 		return root;
 	if (!root->getResponses()->empty()) {
-		Node* tmp = getNode(root->getResponses(), content);
-		if (tmp != nullptr)
+		Node* tmp = getNode(root->getResponses(), content);//Call to the recursive function
+		if (tmp != NULL)
 			return tmp;
 	}
-	return nullptr;
+	return NULL;
 }
 
 bool TreeList::addResponse(string father, string son)
 {
-	Node* curNode = getNode(father);
-	if (curNode == nullptr)
-		return false;
+	Node* curNode = getNode(father);//Search the father at tree
+	if (curNode == NULL)
+		return false;//not found
 	Node* newNode = new Node(son);
-	curNode->getResponses()->push_back(newNode);
+	curNode->getResponses()->push_back(newNode);//adds the new node at end of list
 	return true;
 }
 
 bool TreeList::delSubTree(string content)
 {
-	list<Node*>* tmp = getList(root->getResponses(), content);
+	list<Node*>* tmp = getList(root->getResponses(), content);//Call to the recursive function that returns the list of "content 
 	if (!tmp)
-		return false;
-	for (auto it = tmp->begin(); it != tmp->end(); ++it)
+		return false;//not success
+	list<Node*>::iterator it;
+	for (it = tmp->begin(); it != tmp->end(); ++it)
 	{
-		if((*it)->getContent()==content)
+		if ((*it)->getContent() == content)
 		{
-		if (!(*it)->getResponses()->empty())
-		{
-			delTree((*it)->getResponses());
-		}
+			if (!(*it)->getResponses()->empty())
+			{
+				delTree((*it)->getResponses());//recursive function that delets sons
+			}
+			//delete father
 			delete* it;
 			tmp->remove(*it);
 			return true;
 		}
 	}
-	return false;
+	return false;//not success
 }
+
 void TreeList::print()
 {
-	if (root == nullptr)
+	//We used the visiting method preorder
+	if (root == NULL)
 		return;
 	else
 	{
 		cout << root->getContent() << endl;
 		if (!root->getResponses()->empty())
-			print(root->getResponses());
+			print(root->getResponses());//Call to the recursive function
 	}
 }
 void TreeList::printPath(std::string content)
 {
 	if (root->getContent() == content) {
-		//cout << root->getContent();
 		return;
 	}
 	list<Node*>* lst = new list<Node*>;
@@ -118,80 +122,71 @@ void TreeList::printPath(std::string content)
 	}
 	else {
 		lst->clear();
-		lst = nullptr;
+		lst = NULL;
 	}
-	if (lst != nullptr) {
-		auto it = lst->begin();
-		cout << (*it)->getContent();
-		++it;
-		for (it; it != lst->end(); ++it) {
+	if (lst != NULL) {
+		list<Node*>::iterator it;
+		for (it = lst->begin(); it != lst->end(); ++it) {
+			if (it == lst->begin())
+				cout << (*it)->getContent();
 			cout << "=>" << (*it)->getContent();
 		}
 		cout << endl;
 	}
-	if (lst != nullptr && !lst->empty()) {
+	if (lst != NULL && !lst->empty()) {
 		lst->clear();
-		lst = nullptr;
+		lst = NULL;
 	}
 }
-bool TreeList::printResponse(string content)
+bool TreeList::printSubTree(string content)
 {
 	Node* temp = getNode(content);
-	if (temp == nullptr){
-		return false;
+	if (temp == NULL) {
+		return false;//Not printing occurred
 	}
 	else
 	{
 		cout << temp->getContent() << endl;
 		if (!temp->getResponses()->empty())
-			print(temp->getResponses());
-		return true;
+			print(temp->getResponses());//Call to the recursive function
+		return true;//Printing occurred 
 	}
 }
-
-void TreeList::delTree(list<Node*>* cur)
-{
-	for (auto it = cur->begin(); it != cur->end(); it++)
-	{
-		if (!(*it)->getResponses()->empty())
-			delTree((*it)->getResponses());
-		else
-		{
-			delete* it;
-			*it = nullptr;
-			cur->remove(*it);
-			return;
-		}
-	}
-}
-
 //private functions:
 
-
+/// <summary>
+/// A recursive function that gets a pointer to the list and a string. 
+/// searches for the string in the tree by preorder
+/// </summary>
+/// <param name="temp"></param>
+/// <param name="content"></param>
+/// <returns>Node*</returns>
 TreeList::Node* TreeList::getNode(list<Node*>* temp, string content)
 {
-	for (auto it = temp->begin(); it != temp->end(); ++it)
+	list<Node*>::iterator it;
+	for (it = temp->begin(); it != temp->end(); ++it)
 	{
 		if ((*it)->getContent() == content)
 		{
-			return *it;
+			return *it;//found(stop condition)
 		}
 		else
 		{
 			if (!(*it)->getResponses()->empty())
 			{
-				Node* tmp = getNode((*it)->getResponses(), content);
-				if (tmp != nullptr)
+				Node* tmp = getNode((*it)->getResponses(), content);//call recursive
+				if (tmp != NULL)
 					return tmp;
 			}
 		}
 	}
-	return nullptr;
+	return NULL;//not found
 }
-
+//recursive func. to build direct path from content to root
 list<TreeList::Node*>* TreeList::printPath(list<Node*>* temp, string content, list<Node*>* lst)
 {
-	for (auto it = temp->begin(); it != temp->end(); ++it)
+	list<Node*>::iterator it;
+	for (it = temp->begin(); it != temp->end(); ++it)
 	{
 		lst->push_front(*it);
 		if ((*it)->getContent() == content)
@@ -203,20 +198,45 @@ list<TreeList::Node*>* TreeList::printPath(list<Node*>* temp, string content, li
 			if (!(*it)->getResponses()->empty())
 			{
 				list<Node*>* tmp = printPath((*it)->getResponses(), content, lst);
-				if (tmp != nullptr)
+				if (tmp != NULL)
 					return tmp;
 			}
 		}
 		lst->remove(lst->front());
 	}
-	return nullptr;
+	return NULL;
 }
+//delete all tree 
+void TreeList::delTree(list<Node*>* cur)
+{
+	list<Node*>::iterator it;
+	for (it = cur->begin(); it != cur->end(); it++)
+	{
+		if (!(*it)->getResponses()->empty())
+			delTree((*it)->getResponses());
+		else
+		{
+			delete* it;
+			*it = NULL;
+			cur->remove(*it);
+			return;
+		}
+	}
+}
+/// <summary>
+/// A recursive function that gets a pointer to a list and a value with a default of 1 (for printing spaces).
+/// And each level you enter the depth of the tree the value increases by 1 and when you return the value decreases by 1
+/// ,and here too using in preorder and by all this we can print tree in a hierarchical order
+/// </summary>
+/// <param name="temp"></param>
+/// <param name="space"></param>
 void TreeList::print(list<Node*>* temp, int space)
 {
-	for (auto it = temp->begin(); it != temp->end(); ++it)
+	list<Node*>::iterator it;
+	for (it = temp->begin(); it != temp->end(); ++it)
 	{
 		for (int i = 0; i < space; ++i)
-			cout << "	";
+			cout << "   ";
 		cout << (*it)->getContent() << endl;
 		if (!(*it)->getResponses()->empty()) {
 			print((*it)->getResponses(), ++space);
@@ -225,9 +245,17 @@ void TreeList::print(list<Node*>* temp, int space)
 	}
 }
 
-std::list<TreeList::Node*>* TreeList::getList(std::list<Node*>* temp, std::string content)
+/// <summary>
+/// A recursive function that gets a pointer to the list and a string. 
+/// searches for the string in the tree by preorder
+/// </summary>
+/// <param name="temp"></param>
+/// <param name="content"></param>
+/// <returns> list </returns>
+list<TreeList::Node*>* TreeList::getList(list<Node*>* temp, string content)
 {
-	for (auto it = temp->begin(); it != temp->end(); ++it)
+	list<Node*>::iterator it;
+	for (it = temp->begin(); it != temp->end(); ++it)
 	{
 		if ((*it)->getContent() == content)
 		{
@@ -238,10 +266,10 @@ std::list<TreeList::Node*>* TreeList::getList(std::list<Node*>* temp, std::strin
 			if (!(*it)->getResponses()->empty())
 			{
 				list<Node*>* tmp = getList((*it)->getResponses(), content);
-				if (tmp != nullptr)
+				if (tmp != NULL)
 					return tmp;
 			}
 		}
 	}
-	return nullptr;
+	return NULL;
 }

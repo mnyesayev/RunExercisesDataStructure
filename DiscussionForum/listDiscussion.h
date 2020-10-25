@@ -1,19 +1,32 @@
-#pragma once
 
+#pragma once
 #include "tree.h"
-#include <algorithm>
-class listDiscussion:public TreeList
+class listDiscussion :public TreeList
 {
 public:
-	listDiscussion();
-	~listDiscussion();
-	void addNewTree(std::string r);
-	bool deltree1(TreeList::Node* r);
+	listDiscussion();//default Ctor
+	~listDiscussion();//Dtor
+	
+	void addNewTree(std::string r);//Adds a new tree (discussion) at the beginning of the list
+    
+	//Gets a node and deletes it and its children if it finds a root similar to it
+	bool deltree(TreeList::Node* r);//if the operation fails returns false
+
+	//Adds a node (response) in a tree that contains the title at its root
 	bool addResponse(std::string title, std::string father, std::string son);
-	bool delResponse(std::string title, std::string father);
-	void searchAndPrint(std::string val);
-	void printAllTrees();
+	//if the operation fails returns false
+    
+	//Deletes the node (comment) and its children in the tree containing the header at its root
+	bool delResponse(std::string title, std::string father);//if the operation fails returns false
+	
+	//Looks for a node in the entire list of discussions that contains the response and prints it
+	//in a hierarchical order and then prints the path
+	void searchAndPrint(std::string val);//if the operation fails prints "ERROR"
+
+	void printAllTrees();//Prints all the trees in a hierarchical order
+
 	void printSubTree(std::string title, std::string father);
+	//Prints the subwood that contains the title and path
 private:
 	std::list<TreeList*> lstRoot;
 };

@@ -1,3 +1,9 @@
+/*
+Authors:
+Matan Netanel Yesayev ,ID:207883729
+Asher Mentzer,ID:312505563
+
+*/
 #include <iostream>
 #include <list>
 #include <string>
@@ -27,17 +33,22 @@ int main()
 			cin >> val;
 			tl.addNewTree(val);
 			break;
-		case 's':cout << "enter the discussion title (with no space) "; cin >> title;
-			cout << "enter the last message (with no space) "; cin >> father;
-			cout << "enter the new respond "; cin >> son;
+		case 's':cout << "enter the discussion title (with no space) ";
+			cin >> title;
+			cout << "enter the last message (with no space) ";
+			cin >> father;
+			cout << "enter the new respond ";
+			cin >> son;
 			if (tl.addResponse(title, father, son))
 				cout << "success\n";
 			else
 				cout << "ERROR\n"; break;
-		case 'd':cout << "enter the discussion title (with no space) "; cin >> title;
-			cout << "enter string of subtree to delete (with no space) "; cin >> val;
+		case 'd':cout << "enter the discussion title (with no space) ";
+			cin >> title;
+			cout << "enter string of subtree to delete (with no space) ";
+			cin >> val;
 			if (tl.delResponse(title, val))
-				cout << "success\n"; 
+				cout << "success\n";
 			else
 				cout << "ERROR\n"; break;
 		case 'p':tl.printAllTrees();  break;
