@@ -126,9 +126,10 @@ void TreeList::printPath(std::string content)
 	}
 	if (lst != NULL) {
 		list<Node*>::iterator it;
-		for (it = lst->begin(); it != lst->end(); ++it) {
-			if (it == lst->begin())
-				cout << (*it)->getContent();
+		it = lst->begin();
+		cout << (*it)->getContent();
+		++it;
+		for (it; it != lst->end(); ++it) {
 			cout << "=>" << (*it)->getContent();
 		}
 		cout << endl;
