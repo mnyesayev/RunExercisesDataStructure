@@ -55,17 +55,15 @@ bool listDiscussion::delResponse(std::string title, std::string father)
 		{
 			if ((*it)->getRoot()->getContent() == father)
 			{
-				if ((*it)->getRoot()->getResponses()->empty())
+				if (!(*it)->getRoot()->getResponses()->empty())
 				{
+					list<Node*>* cur = (*it)->getRoot()->getResponses();
+					(*it)->delTree(cur);
+				}
 					delete* it;
 					*it = nullptr;
 					this->lstRoot.remove(*it);
 					return true;
-				}
-				else
-				{
-					(*it)->delTree(root->getResponses());
-				}
 			}
 			else if ((*it)->delSubTree(father))
 				return true;
