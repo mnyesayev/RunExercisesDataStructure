@@ -77,6 +77,9 @@ bool TreeList::addResponse(string father, string son)
 bool TreeList::delSubTree(string content)
 {
 	list<Node*>* tmp = getList(root->getResponses(), content);
+	if (!tmp)
+		return false;
+
 	for (auto it = tmp->begin(); it != tmp->end(); ++it)
 	{
 		if((*it)->getContent()==content)
@@ -111,7 +114,7 @@ void TreeList::printPath(std::string content)
 		return;
 	}
 	list<Node*>* lst = new list<Node*>;
-	lst->push_back(root);
+	lst->push_front(root);
 	if (!root->getResponses()->empty()) {
 		lst = printPath(root->getResponses(), content, lst);
 	}
@@ -124,7 +127,7 @@ void TreeList::printPath(std::string content)
 			cout << (*it)->getContent() <<"=>";
 		}
 	}
-	if (!lst->empty()) {
+	if (lst !=nullptr && !lst->empty()) {
 		lst->clear();
 		lst = nullptr;
 	}
@@ -169,7 +172,7 @@ list<TreeList::Node*>* TreeList::printPath(list<Node*>* temp, string content, li
 {
 	for (auto it = temp->begin(); it != temp->end(); ++it)
 	{
-		lst->push_back(*it);
+		lst->push_front(*it);
 		if ((*it)->getContent() == content)
 		{
 			return lst;
@@ -183,7 +186,7 @@ list<TreeList::Node*>* TreeList::printPath(list<Node*>* temp, string content, li
 					return tmp;
 			}
 		}
-		lst->remove(lst->back());
+		lst->remove(lst->front());
 	}
 	return nullptr;
 }
@@ -207,7 +210,7 @@ void TreeList::print(list<Node*>* temp, int space)
 	for (auto it = temp->begin(); it != temp->end(); ++it)
 	{
 		for (int i = 0; i < space; ++i)
-			cout << "	";
+			cout <<"   ";
 		cout << (*it)->getContent() << endl;
 		if (!(*it)->getResponses()->empty()) {
 			print((*it)->getResponses(), ++space);
