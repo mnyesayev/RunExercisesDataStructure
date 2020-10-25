@@ -27,11 +27,11 @@ public:
 	bool delSubTree(std::string content);
 	void print();
 	void printPath(std::string content);
-	void printResponse(std::string content);
+	bool printResponse(std::string content);
+	void delTree(std::list<Node*>* temp);
 private:
 	Node* getNode(std::list<Node*>* temp, std::string content);
 	std::list<Node*>* printPath(std::list<Node*>* temp, std::string content, std::list<Node*>* lst);
-	void delTree(std::list<Node*>* temp);
 	void print(std::list<Node*>* temp,int space=1);
 	std::list<Node*>* getList(std::list<Node*>*,std::string);
 	//

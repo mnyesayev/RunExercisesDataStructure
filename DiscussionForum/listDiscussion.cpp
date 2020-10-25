@@ -1,6 +1,6 @@
 #include "listDiscussion.h"
 using namespace std;
-listDiscussion::listDiscussion(){}
+listDiscussion::listDiscussion() {}
 
 listDiscussion::~listDiscussion()
 {
@@ -13,8 +13,8 @@ listDiscussion::~listDiscussion()
 
 void listDiscussion::addNewTree(std::string r)
 {
-	TreeList* tmp=new TreeList(r);
-	lstRoot.push_back(tmp);
+	TreeList* tmp = new TreeList(r);
+	lstRoot.push_front(tmp);
 }
 bool listDiscussion::deltree1(TreeList::Node* r)
 {
@@ -26,7 +26,7 @@ bool listDiscussion::deltree1(TreeList::Node* r)
 		{
 			if (r->getContent() == (*it)->getRoot()->getContent())
 				(*it)->delSubTree(r->getContent());
-				return true;
+			return true;
 		}
 	}
 	return false;
@@ -36,12 +36,12 @@ bool listDiscussion::addResponse(std::string title, std::string father, std::str
 {
 	if (lstRoot.empty())
 		return false;
-	for (auto it = lstRoot.begin(); it!=lstRoot.end(); it++)
+	for (auto it = lstRoot.begin(); it != lstRoot.end(); it++)
 	{
 		if ((*it)->getRoot()->getContent() == title)
 		{
-			if((*it)->addResponse(father, son))
-			return true;
+			if ((*it)->addResponse(father, son))
+				return true;
 		}
 	}
 	return false;
@@ -53,13 +53,18 @@ bool listDiscussion::delResponse(std::string title, std::string father)
 	{
 		if ((*it)->getRoot()->getContent() == title)
 		{
-			if ((*it)->getRoot()->getResponses()->empty()) {
+			if ((*it)->getRoot()->getContent() == father)
+			{
+				if (!(*it)->getRoot()->getResponses()->empty()){
+					list<Node*>* cur = (*it)->getRoot()->getResponses();
+					(*it)->delTree(cur);
+				}
 				delete* it;
 				*it = nullptr;
 				this->lstRoot.remove(*it);
 				return true;
 			}
-			if ((*it)->delSubTree(father))
+			else if ((*it)->delSubTree(father))
 				return true;
 		}
 	}
@@ -68,20 +73,24 @@ bool listDiscussion::delResponse(std::string title, std::string father)
 
 void listDiscussion::searchAndPrint(std::string val)
 {
+	bool check = 0;
 	for (auto it = lstRoot.begin(); it != lstRoot.end(); it++)
 	{
-		(*it)->printResponse(val);
+		if ((*it)->printResponse(val))
+			check = 1;
 		(*it)->printPath(val);
 	}
+	if(check==0)
+		cout << "ERROR\n" << endl;
 }
 
 void listDiscussion::printAllTrees()
 {
 	int i = 1;
-	for (auto it = lstRoot.begin(); it != lstRoot.end(); ++i,it++)
+	for (auto it = lstRoot.begin(); it != lstRoot.end(); ++i, it++)
 	{
 		cout << "Tree #" << i << endl;
-	   (*it)->print();
+		(*it)->print();
 	}
 }
 
@@ -90,6 +99,9 @@ void listDiscussion::printSubTree(std::string title, std::string father)
 	for (auto it = lstRoot.begin(); it != lstRoot.end(); it++)
 	{
 		if ((*it)->getRoot()->getContent() == title)
+		{
 			(*it)->printResponse(father);
+			(*it)->printPath(father);
+		}
 	}
 }
