@@ -1,5 +1,5 @@
 #pragma once
-enum state { empty, full, deleted };
+enum state { Empty, Full, Deleted };
 template <typename T, typename K>
 class Item
 {

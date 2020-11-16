@@ -9,7 +9,7 @@ int main()
 	int n;
 	HSubject hs(1000);
 	string subject, title;
-
+	Item<int, int> item;
 	cout << "Hash Table\n";
 	cout << "\nChoose one of the following" << endl;
 	cout << "n: New hash table" << endl;
@@ -25,14 +25,22 @@ int main()
 		switch (ch)
 		{
 
-		case 'n':hs.startNewTable(); break;
-		case 'a':cout << "Enter a subject and a title\n";
-			cin >> subject >> title;
-			hs.addSubjectAndTitle(subject, title);
+		case 'n':hs.startNewTable();
 			break;
-		case 'd':cout << "Enter a subject to remove\n";
+		case 'a':
+		{cout << "Enter a subject and a title\n";
+
+		cin >> subject >> title;
+		hs.addSubjectAndTitle(subject, title);
+		}
+		break;
+		case 'd':
+			cout << "Enter a subject to remove\n";
+
 			cin >> subject;
-			hs.remove(subject); break;
+			hs.deleteKey(subject);
+
+			break;
 		case 't':cout << "enter subject to print\n";
 			cin >> subject;
 			hs.printS(subject); break;
@@ -44,4 +52,5 @@ int main()
 		}
 	} while (ch != 'e');
 	return 0;
+
 }
