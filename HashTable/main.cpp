@@ -11,7 +11,7 @@ int main()
 {
 	char ch;
 	int n;
-	HSubject hs(10);
+	HSubject hs(1000);
 	string subject, title;
 	cout << "Hash Table\n";
 	cout << "\nChoose one of the following" << endl;

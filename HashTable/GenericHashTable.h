@@ -14,7 +14,7 @@ template<typename T, typename K>
 class HashTable :public Item<T, K>
 {
 private:
-	int curSize = 0;
+	int curSize;
 	int tableSize;
 	int getClosesPrime(int size)
 	{
@@ -45,13 +45,13 @@ private:
 protected:
 	HashTable(int size)
 	{
-
+		curSize = 0;
 		tableSize = getClosesPrime(size);
 		table.resize(tableSize);
 	}
 	virtual ~HashTable() {}
 
-	vector<Item<T, K>> table;
+	vector<Item<T, K> > table;
 
 	int getTableSize() { return tableSize; }
 	int getCurSize() { return curSize; }

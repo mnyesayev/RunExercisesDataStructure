@@ -11,9 +11,9 @@ class HSubject :public HashTable<std::list<std::string>, std::string >
 {
 public:
 	HSubject(int size) :HashTable(size) {}
-	~HSubject() override;
-	int h1(string k) override;
-	int h2(string k)override;
+	~HSubject();
+	int h1(string k);
+	int h2(string k);
 	void addSubjectAndTitle(string, string);
 	void printS(string key);
 	void printN(string k, int n);

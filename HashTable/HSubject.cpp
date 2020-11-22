@@ -11,18 +11,18 @@ HSubject::~HSubject()
 }
 int HSubject::h1(string k)
 {
-	
-	int ch=0;
+
+	int ch = 0;
 	for (int i = 0; i < k.size(); i++)
 	{
-		ch += ((long long)(k[i]*pow(128,i))) % this->getTableSize();
+		ch += ((long long)(k[i] * pow(128, i))) % this->getTableSize();
 	}
 	return ch;
 }
 
 int  HSubject::h2(string k)
 {
-	int ch=0;
+	int ch = 0;
 	for (int i = 0; i < k.size(); i++)
 	{
 		ch += ((long long)(k[i] * pow(128, i))) % this->getTableSize();
@@ -39,9 +39,10 @@ void HSubject::addSubjectAndTitle(string subject, string title)
 	}
 	else
 	{
-		list<string> lst{ title };
-		if (insert(lst, subject))
-			cout << "success to add new subject" << endl;
+		list<string> lst;
+		lst.push_back(title);
+		if (!insert(lst, subject))
+			cout << "ERROR" << endl;
 	}
 }
 
@@ -51,13 +52,16 @@ void HSubject::printS(string key)
 	if (index != -1)
 	{
 		list<string>::iterator it = table[index].data.begin();
-		if (it != table[index].data.end())
-			cout << "titles:" << endl;
+		if (it == table[index].data.end())
+			cout << "ERROR";
 		for (it; it != table[index].data.end(); ++it)
 		{
-			cout << "	" << *it << endl;
+			cout << *it << " ";
 		}
+		cout << endl;
 	}
+	else
+		cout << "ERROR" << endl;
 }
 
 void HSubject::printN(string key, int n)
@@ -73,14 +77,17 @@ void HSubject::printN(string key, int n)
 		else
 			size = n;
 		list<string>::iterator it = table[index].data.begin();
-		if (it != table[index].data.end())
-			cout << "titles:" << endl;
+		if (it == table[index].data.end())
+			cout << "ERROR";
 		int i = 0;
-		for (it; i<size; ++it,++i)
+		for (it; i < size; ++it, ++i)
 		{
-			cout << "	" << *it << endl;
+			cout << *it << " ";
 		}
+		cout << endl;
 	}
+	else
+		cout << "ERROR" << endl;
 }
 
 void HSubject::startNewTable()
@@ -91,7 +98,7 @@ void HSubject::startNewTable()
 		{
 			table[i].data.clear();
 			table[i].key.clear();
-			table[i].flag=Empty;
+			table[i].flag = Empty;
 		}
 	}
 	setCurSize();
