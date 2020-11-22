@@ -5,10 +5,22 @@ Asher Mentzer,ID:312505563
 */
 #include "HSubject.h"
 using namespace std;
+
+/// <summary>
+/// destructor that clear all the table
+/// </summary>
 HSubject::~HSubject()
 {
 	startNewTable();
 }
+
+/// <summary>
+/// the first hash func that get string and 
+/// claculate the askii of each letter *128^his palce in the string
+/// all this % table size
+/// </summary>
+/// <param name="k">the string to insert</param>
+/// <returns>the index to insert to</returns>
 int HSubject::h1(string k)
 {
 
@@ -20,6 +32,13 @@ int HSubject::h1(string k)
 	return ch;
 }
 
+/// <summary>
+/// the second hash func that get string and 
+/// claculate the askii of each letter *128^his palce in the string
+/// all this (% table size-1)+1 
+/// </summary>
+/// <param name="k"></param>
+/// <returns></returns>
 int  HSubject::h2(string k)
 {
 	int ch = 0;
@@ -30,6 +49,13 @@ int  HSubject::h2(string k)
 	return (ch % (this->getTableSize() - 1)) + 1;
 }
 
+/// <summary>
+/// get the sucject and the respond and if the subject exist in the table
+/// add new respons yo yhis subject else create new subject add this to
+/// the table and add the response to there
+/// </summary>
+/// <param name="subject"></param>
+/// <param name="title"></param>
 void HSubject::addSubjectAndTitle(string subject, string title)
 {
 	int i = find(subject);
@@ -46,6 +72,11 @@ void HSubject::addSubjectAndTitle(string subject, string title)
 	}
 }
 
+/// <summary>
+/// get subject and print all the responses of this subject
+/// if is not exist print error
+/// </summary>
+/// <param name="key"></param>
 void HSubject::printS(string key)
 {
 	int index = find(key);
@@ -64,12 +95,20 @@ void HSubject::printS(string key)
 		cout << "ERROR" << endl;
 }
 
+/// <summary>
+/// get subject and number of responses to print
+/// and print the number of responses of this subject
+/// if not exist print error
+/// </summary>
+/// <param name="key">subject</param>
+/// <param name="n">number of responses to print</param>
 void HSubject::printN(string key, int n)
 {
 	int index = find(key);
 	if (index != -1)
 	{
 		int size;
+		//if the number big than what inside prunt all responses
 		if (n >= table[index].data.size())
 		{
 			size = table[index].data.size();
@@ -90,6 +129,9 @@ void HSubject::printN(string key, int n)
 		cout << "ERROR" << endl;
 }
 
+/// <summary>
+/// clear all the table and start it as new table
+/// </summary>
 void HSubject::startNewTable()
 {
 	for (int i = 0; i < getTableSize(); i++)
@@ -104,6 +146,10 @@ void HSubject::startNewTable()
 	setCurSize();
 }
 
+
+/// <summary>
+/// print all the items in the table
+/// </summary>
 void HSubject::print()
 {
 	for (int i = 0; i < getTableSize(); i++)
