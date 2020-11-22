@@ -1,3 +1,8 @@
+/*
+Authors:
+Matan Netanel Yesayev ,ID:207883729
+Asher Mentzer,ID:312505563
+*/
 #pragma once
 enum state { Empty, Full, Deleted };
 template <typename T, typename K>
@@ -7,6 +12,6 @@ public:
 	T data;
 	K key;
 	state flag;
-	Item() {}
+	Item() { flag = Empty; }
 	Item(T d, K k, state f) { data = d; key = k; flag = f; }
 };

@@ -1,13 +1,33 @@
+/*
+Authors:
+Matan Netanel Yesayev ,ID:207883729
+Asher Mentzer,ID:312505563
+*/
 #include "HSubject.h"
 using namespace std;
-int HSubject::h1(int k)
+HSubject::~HSubject()
 {
-	return k % this->getTableSize();
+	startNewTable();
+}
+int HSubject::h1(string k)
+{
+	
+	int ch=0;
+	for (int i = 0; i < k.size(); i++)
+	{
+		ch += ((long long)(k[i]*pow(128,i))) % this->getTableSize();
+	}
+	return ch;
 }
 
-int  HSubject::h2(int k)
+int  HSubject::h2(string k)
 {
-	return (k % (this->getTableSize() - 1)) + 1;
+	int ch=0;
+	for (int i = 0; i < k.size(); i++)
+	{
+		ch += ((long long)(k[i] * pow(128, i))) % this->getTableSize();
+	}
+	return (ch % (this->getTableSize() - 1)) + 1;
 }
 
 void HSubject::addSubjectAndTitle(string subject, string title)
@@ -15,7 +35,7 @@ void HSubject::addSubjectAndTitle(string subject, string title)
 	int i = find(subject);
 	if (i != -1)
 	{
-		getTable()[i].data.push_front(title);
+		table[i].data.push_front(title);
 	}
 	else
 	{
@@ -30,31 +50,30 @@ void HSubject::printS(string key)
 	int index = find(key);
 	if (index != -1)
 	{
-		list<string>::iterator it = getTable()[index].data.begin();
-		if (it != getTable()[index].data.end())
+		list<string>::iterator it = table[index].data.begin();
+		if (it != table[index].data.end())
 			cout << "titles:" << endl;
-		for (it; it != getTable()[index].data.end(); ++it)
+		for (it; it != table[index].data.end(); ++it)
 		{
 			cout << "	" << *it << endl;
 		}
 	}
 }
 
-void HSubject::printN(string k, int n)
+void HSubject::printN(string key, int n)
 {
 	int index = find(key);
 	if (index != -1)
 	{
 		int size;
-	
-		if (n >= getTable()[index].data.size())
+		if (n >= table[index].data.size())
 		{
-			size = getTable()[index].data.size();
+			size = table[index].data.size();
 		}
 		else
 			size = n;
-		list<string>::iterator it = getTable()[index].data.begin();
-		if (it != getTable()[index].data.end())
+		list<string>::iterator it = table[index].data.begin();
+		if (it != table[index].data.end())
 			cout << "titles:" << endl;
 		int i = 0;
 		for (it; i<size; ++it,++i)
@@ -68,11 +87,11 @@ void HSubject::startNewTable()
 {
 	for (int i = 0; i < getTableSize(); i++)
 	{
-		if (getTable()[i].flag != Empty)
+		if (table[i].flag != Empty)
 		{
-			getTable()[i].data.clear();
-			getTable()[i].key.clear();
-			getTable()[i].flag=Empty;
+			table[i].data.clear();
+			table[i].key.clear();
+			table[i].flag=Empty;
 		}
 	}
 	setCurSize();
@@ -82,13 +101,13 @@ void HSubject::print()
 {
 	for (int i = 0; i < getTableSize(); i++)
 	{
-		if (getTable()[i].flag == Full)
+		if (table[i].flag == Full)
 		{
 			cout << "index: " << i;
-			cout << " Subject: " << getTable()[i].key << endl;
-			list<string>::iterator it = getTable()[i].data.begin();
+			cout << " Subject: " << table[i].key << endl;
+			list<string>::iterator it = table[i].data.begin();
 			cout << "titles:" << endl;
-			for (it; it != getTable()[i].data.end(); ++it)
+			for (it; it != table[i].data.end(); ++it)
 			{
 				cout << "	" << *it << endl;
 			}

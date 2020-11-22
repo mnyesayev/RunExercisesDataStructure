@@ -1,3 +1,8 @@
+/*
+Authors:
+Matan Netanel Yesayev ,ID:207883729
+Asher Mentzer,ID:312505563
+*/
 #pragma once
 #include<iostream>
 #include<vector>
@@ -5,12 +10,10 @@
 #include"Item.h" 
 using namespace std;
 
-
 template<typename T, typename K>
 class HashTable :public Item<T, K>
 {
 private:
-	vector<Item<T, K>> table;
 	int curSize = 0;
 	int tableSize;
 	int getClosesPrime(int size)
@@ -40,23 +43,24 @@ private:
 		}
 	}
 protected:
-	void setCurSize() { curSize = 0; }
-public:
 	HashTable(int size)
 	{
+
 		tableSize = getClosesPrime(size);
 		table.resize(tableSize);
-		cout << tableSize << endl;
 	}
 	virtual ~HashTable() {}
+
+	vector<Item<T, K>> table;
+
 	int getTableSize() { return tableSize; }
-	vector<Item<T, K>> getTable() { return table; }
 	int getCurSize() { return curSize; }
+	void setCurSize() { curSize = 0; }
 	virtual int h1(K key) = 0;
 	virtual int h2(K key) = 0;
 	int hash(K key, int i)
 	{
-		return (h1(key) + i * h2(key) % tableSize);
+		return (h1(key) + i * h2(key)) % tableSize;
 	}
 	int find(K k)
 	{
@@ -97,16 +101,6 @@ public:
 	{
 		return(curSize == tableSize);
 	}
-	bool deleteKey(K k)
-	{
-		int index = find(k);
-		if (index != -1)
-		{
-			table[index].flag = Deleted;
-			return true;
-		}
-		return false;
-	}
 	bool setData(Item<T, K> item, int index)
 	{
 		if (index >= tableSize)
@@ -133,6 +127,18 @@ public:
 			cout << endl;
 		}
 	}
+public:
+	bool deleteKey(K k)
+	{
+		int index = find(k);
+		if (index != -1)
+		{
+			table[index].flag = Deleted;
+			return true;
+		}
+		return false;
+	}
+
 };
 
 
