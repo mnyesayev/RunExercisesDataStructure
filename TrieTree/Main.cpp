@@ -45,12 +45,12 @@ int main()
 			break;
 
 		case '4':
-			/*cout << "Enter a prefix to complete " << endl;
+			cout << "Enter a prefix to complete " << endl;
 			cin >> wrd;
 			comp = tr.printAutoSuggestions(wrd);
 
 			if (comp == 0)
-				cout << "No string exist with this prefix\n";*/
+				cout << "No string exist with this prefix\n";
 			break;
 		case '5':cout << "bye " << endl; break;
 		default: cout << "ERROR " << endl;  break;

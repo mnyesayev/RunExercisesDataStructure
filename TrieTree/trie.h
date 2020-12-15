@@ -10,13 +10,19 @@ class Trie
 	public:
 		TrieNode* children[ALPHABET];
 		TrieNode* father;
-		bool isEndWord=false;
-		int countChildrens=0;
-		TrieNode(){}
+		bool isEndWord = false;
+		int countChildrens = 0;
+		TrieNode()
+		{
+			*children = NULL;
+			father = NULL;
+			isEndWord = false;
+			countChildrens = 0;
+		}
 	};
-public:	
+public:
 	TrieNode* root;
-	Trie() {}
+	Trie() { root = new TrieNode(); }
 	void insertWord(string str);
 	bool deleteWord(string str);
 	bool searchWord(string str);

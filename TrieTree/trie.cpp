@@ -33,8 +33,9 @@ void Trie::insertWord(string str)
 	else
 	{*/
 	if (root->children == NULL)
+	{
 		*root->children = new TrieNode[ALPHABET];
-
+	}
 	for (int i = 0; i < str.size(); ++i)
 	{
 		char ch = str[i];
@@ -55,7 +56,7 @@ bool Trie::deleteWord(string str)
 {
 	if (str.empty())return false;
 	TrieNode* ptr = root;
-	TrieNode* prev;
+	TrieNode* prev=NULL;
 	for (int i = 0; i < str.size(); ++i)
 	{
 		char ch = str[i];
@@ -71,13 +72,13 @@ bool Trie::deleteWord(string str)
 	/// <returns></returns>
 	if (!ptr->isEndWord)return false;
 
-	if (ptr->children != NULL)
+	if (ptr->countChildrens != 0)
 	{
 		ptr->isEndWord = false;
 		return true;
 	}
 
-	char ch = str[0];
+	char ch = str[str.size()-1];
 	ptr = ptr->father;
 	ptr->children[ch - 97] = NULL;
 	ptr->countChildrens --;
@@ -85,18 +86,12 @@ bool Trie::deleteWord(string str)
 	{
 		char ch = str[i];
 		ptr = ptr->father;
-		if (ptr->children[ch - 97]->isEndWord = true)
+		if (ptr->children[ch - 97]->isEndWord)
 			return true;
-		if (ptr->countChildrens == 1)
-		{
-			*ptr->children = NULL;
-		}
-		else
-		{
-			ptr->children[ch - 97] = NULL;
-			ptr->countChildrens--;
+		ptr->children[ch - 97] = NULL;
+		ptr->countChildrens--;
+		if (ptr->countChildrens != 1)
 			return true;
-		}
 	}
 }
 
@@ -120,7 +115,7 @@ bool Trie::searchWord(string str, TrieNode* node)
 {
 	if (str.size() == 1)
 	{
-		if (node->isEndWord)return true;
+		if (node->children[str[0] - 97]->isEndWord)return true;
 		else return false;
 	}
 	if (node->children[str[0] - 97] == NULL)return false;
