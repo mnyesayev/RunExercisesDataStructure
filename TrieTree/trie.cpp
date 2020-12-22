@@ -1,6 +1,7 @@
 #include "trie.h"
+#include <iostream>
 
-
+using namespace std;
 void Trie::insertWord(string str)
 {
 	if (str.empty())return;
@@ -56,7 +57,7 @@ bool Trie::deleteWord(string str)
 {
 	if (str.empty())return false;
 	TrieNode* ptr = root;
-	TrieNode* prev=NULL;
+	TrieNode* prev = NULL;
 	for (int i = 0; i < str.size(); ++i)
 	{
 		char ch = str[i];
@@ -78,11 +79,11 @@ bool Trie::deleteWord(string str)
 		return true;
 	}
 
-	char ch = str[str.size()-1];
+	char ch = str[str.size() - 1];
 	ptr = ptr->father;
 	ptr->children[ch - 97] = NULL;
-	ptr->countChildrens --;
-	for (int i = str.size()-2; i >= 0; --i)
+	ptr->countChildrens--;
+	for (int i = str.size() - 2; i >= 0; --i)
 	{
 		char ch = str[i];
 		ptr = ptr->father;
@@ -106,9 +107,45 @@ bool Trie::searchWord(string str)
 	return searchWord(str.erase(0, 1), root->children[str[0] - 97]);
 }
 
-void Trie::printAllWordsFromPrefix(TrieNode* node)
+int Trie::printAutoSuggestions(string str)
 {
 
+	TrieNode* node = root;
+	for (int i = 0; i < str.size(); i++)
+	{
+		char ch = str[i];
+		if (node->children[ch - 97] == NULL)
+			return 0;
+		node = node->children[ch - 97];
+	}
+	return printAllWordsFromPrefix(str, node);
+}
+
+int Trie::printAllWordsFromPrefix(string str, TrieNode* node)
+{
+	string tmp = str;
+	int comp = 0;
+	if (node->isEndWord)
+	{
+		cout << tmp << endl;
+		++comp;
+	}
+	int count = node->countChildrens;
+	for (int i = 0; i < 26; i++)
+	{
+		if (count == 0)
+			break;
+		if (node->children[i] != NULL)
+		{
+			char ch = i + 97;
+			tmp += ch;
+			--count;
+			comp = printAllWordsFromPrefix(tmp, node->children[i]);
+			tmp.resize(tmp.size() - 1);
+		}
+	}
+
+	return comp;
 }
 
 bool Trie::searchWord(string str, TrieNode* node)

@@ -26,8 +26,9 @@ public:
 	void insertWord(string str);
 	bool deleteWord(string str);
 	bool searchWord(string str);
-	void printAllWordsFromPrefix(TrieNode* node);
+	int printAutoSuggestions(string str);
 private:
+	int printAllWordsFromPrefix(string str, TrieNode* node);
 	bool searchWord(string str, TrieNode* node);
 };
 
