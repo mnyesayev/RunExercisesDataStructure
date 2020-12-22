@@ -10,8 +10,8 @@ class Trie
 	public:
 		TrieNode* children[ALPHABET];
 		TrieNode* father;
-		bool isEndWord = false;
-		int countChildrens = 0;
+		bool isEndWord;
+		int countChildrens;
 		TrieNode()
 		{
 			*children = NULL;
@@ -19,10 +19,19 @@ class Trie
 			isEndWord = false;
 			countChildrens = 0;
 		}
+		~TrieNode()
+		{
+			for (int i = 0; i < ALPHABET; i++)
+			{
+				if (children[i] != NULL)
+					delete children[i];
+			}
+		}
 	};
 public:
 	TrieNode* root;
 	Trie() { root = new TrieNode(); }
+	~Trie() { if (root != NULL) delete root; }
 	void insertWord(string str);
 	bool deleteWord(string str);
 	bool searchWord(string str);
