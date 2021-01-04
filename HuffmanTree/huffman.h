@@ -28,7 +28,7 @@ private:
 		HuffmanNode() { frequency = 0; left = NULL; right = NULL; }
 		HuffmanNode(char ch, int frequency) { this->str += ch; this->frequency = frequency; left = NULL; right = NULL;
 		}
-		void setStr(std::string st) { str = st; }
+		void setStr(char st) { str += st; }
 		std::string getStr() { return str; }
 		void setFrequency(int f) { frequency = f; }
 		int getFrequency() { return frequency; }
@@ -36,6 +36,7 @@ private:
 		HuffmanNode* getLeft() { return left; }
 		void setRight(HuffmanNode* p) { right = p; }
 		HuffmanNode* getRight() { return right; }
+		~HuffmanNode() { if (left != NULL)delete left; if (right != NULL)delete right;}
 	};
 public:
 	HuffmanNode* root;
@@ -44,6 +45,9 @@ public:
 	HuffmanTree() { root = NULL; }
 	void buildTree(std::string word);
 	void printDetails(std::string word);
+	void encode(int n, std::string& letters, std::string& encode, std::string word);
+	void clear();
+	~HuffmanTree() { if (root != NULL)delete root; }
 private :
 	class compareNode
 	{
@@ -56,6 +60,7 @@ private :
 	void inOrder(HuffmanNode*, std::string&, std::vector<std::string>&, std::string&, std::string&);
 	int checkData(char ch);
 	std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, compareNode> pQueue;
+	void encode(HuffmanNode*, std::string&, std::string&);
 };
 
 
