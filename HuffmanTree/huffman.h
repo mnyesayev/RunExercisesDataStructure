@@ -1,3 +1,8 @@
+/*
+Authors:
+Matan Netanel Yesayev ,ID:207883729
+Asher Mentzer,ID:312505563
+*/
 #pragma once
 #include <string>
 #include<vector>
@@ -20,8 +25,9 @@ private:
 		HuffmanNode* right;
 		friend class compareNode;
 	public:
-		HuffmanNode(){}
-		HuffmanNode(char ch, int frequency) { this->str += ch; this->frequency = frequency; }
+		HuffmanNode() { frequency = 0; left = NULL; right = NULL; }
+		HuffmanNode(char ch, int frequency) { this->str += ch; this->frequency = frequency; left = NULL; right = NULL;
+		}
 		void setStr(std::string st) { str = st; }
 		std::string getStr() { return str; }
 		void setFrequency(int f) { frequency = f; }
@@ -35,7 +41,7 @@ public:
 	HuffmanNode* root;
 	std::vector < Data > data;
 	//std::vector<int> frequencyPerLatter;
-	HuffmanTree() { }
+	HuffmanTree() { root = NULL; }
 	void buildTree(std::string word);
 	void printDetails(std::string word);
 private :

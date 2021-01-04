@@ -1,6 +1,11 @@
+/*
+Authors:
+Matan Netanel Yesayev ,ID:207883729
+Asher Mentzer,ID:312505563
+*/
 #include "huffman.h"
-using namespace std;
 
+using namespace std;
 
 void HuffmanTree::buildTree(string word)
 {
